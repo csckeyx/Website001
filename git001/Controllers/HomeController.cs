@@ -15,7 +15,7 @@ namespace git001.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "kenan 0012";
 
             return View();
         }
