@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.StorageClient;
+using System.Configuration;
+using System.Data.Services.Client;
 
 namespace git001.Controllers
 {
+    public class StateCounty
+    {
+        public String Address { get; set; }
+        public int Size { get; set; }
+    }
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -15,10 +25,26 @@ namespace git001.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "kenan 0012";
+            CloudStorageAccount sa = CloudStorageAccount.Parse(
+                ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+
+            CloudTableClient tc = sa.CreateCloudTableClient();
+
+            TableServiceContext tsc = tc.GetDataServiceContext();
+
+            CloudTableQuery<StateCounty> res =  tsc.CreateQuery<StateCounty>("tableExplore003").AsTableServiceQuery<StateCounty>();
+
+            string ss = "";
+            foreach( StateCounty one in res)
+            {
+                ss = String.Format("Address: {0}, Size: {1} \n", one.Address, one.Size);
+            }
+            
+            ViewBag.Message = ss;
 
             return View();
         }
+
 
         public ActionResult Contact()
         {

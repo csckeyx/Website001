@@ -49,14 +49,19 @@ namespace git001.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+
+                    System.Diagnostics.Trace.TraceInformation("User :{0}", user);
+
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
+
+                    System.Diagnostics.Trace.TraceInformation("Invalid username or password");
+
                     ModelState.AddModelError("", "Invalid username or password.");
                 }
 
-                System.Diagnostics.Trace.TraceInformation("User :{0}", user);
 
             }
 
