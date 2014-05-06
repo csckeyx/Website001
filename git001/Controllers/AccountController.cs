@@ -55,7 +55,11 @@ namespace git001.Controllers
                 {
                     ModelState.AddModelError("", "Invalid username or password.");
                 }
+
+                System.Diagnostics.Trace.TraceInformation("User :{0}", user);
+
             }
+
 
             // If we got this far, something failed, redisplay form
             return View(model);
