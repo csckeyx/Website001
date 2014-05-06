@@ -25,7 +25,7 @@ namespace git001.Controllers
             ViewBag.Message = "Your contact kenan 00333 55555555.";
 
             string ss = System.Configuration.ConfigurationManager.AppSettings.Get("csckeyx");
-            System.Diagnostics.Trace.TraceInformation( "Contract is clicked. {0} at {1}", ss, DateTime.Now.ToString())
+            System.Diagnostics.Trace.TraceInformation("Contract is clicked. {0} at {1}", ss, DateTime.Now.ToString());
             return View();
         }
     }
