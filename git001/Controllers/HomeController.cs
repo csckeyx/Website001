@@ -39,7 +39,9 @@ namespace git001.Controllers
             {
                 ss = String.Format("Address: {0}, Size: {1} \n", one.Address, one.Size);
             }
-            
+
+            System.Diagnostics.Trace.TraceInformation(ss);
+
             ViewBag.Message = ss;
 
             return View();
