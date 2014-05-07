@@ -12,8 +12,8 @@ namespace git001.Controllers
 {
     public class StateCounty
     {
-        public String Address { get; set; }
-        public int Size { get; set; }
+        public String address { get; set; }
+        public int size { get; set; }
     }
 
     public class HomeController : Controller
@@ -37,7 +37,7 @@ namespace git001.Controllers
             string ss = "";
             foreach( StateCounty one in res)
             {
-                ss = String.Format("Address: {0}, Size: {1} \n", one.Address, one.Size);
+                ss += String.Format("Address: {0}, Size: {1} \n", one.address, one.size);
             }
 
             System.Diagnostics.Trace.TraceInformation(ss);
