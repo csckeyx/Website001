@@ -7,6 +7,8 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
 using System.Configuration;
 using System.Data.Services.Client;
+using System.ServiceModel;
+using Microsoft.ServiceBus;
 
 namespace git001.Controllers
 {
@@ -20,6 +22,30 @@ namespace git001.Controllers
     {
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult AWSAnalysis(int ID)
+        {
+            var cf = new ChannelFactory<TMTech.AWS.WcfService.IServiceAWS>(
+                new NetTcpRelayBinding(),
+                new EndpointAddress(ServiceBusEnvironment.CreateServiceUri("sb", "AzureToTMTech", "awsservice")));
+
+            cf.Endpoint.Behaviors.Add(new TransportClientEndpointBehavior { TokenProvider = TokenProvider.CreateSharedSecretTokenProvider("owner", "AN/8r9fXlclyYhqutL+N2dIQb2oJkfRcQ4z3ak7l/ro=") });
+
+            var ch = cf.CreateChannel();
+            TMTech.AWS.WcfService.AnalysisParameter result = ch.GetAnalysisByID(ID);
+
+
+            string strAnalysisInfo = "";
+            if ( result != null )
+            {
+                strAnalysisInfo += string.Format("<h3>Analysis ID: {0} </h3>", result.AnalysisID);
+                strAnalysisInfo += string.Format("<h3>Analysis Name: {0} </h3>", result.AnalysisName);
+                strAnalysisInfo += string.Format("<h3>Analysis Region Peril: {0} </h3>", result.RegionPeril);
+            }
+            @ViewBag.AnalysisInfo = strAnalysisInfo;
+
             return View();
         }
 
