@@ -47,13 +47,23 @@ namespace git001.Controllers
             return View();
         }
 
-
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact kenan 00333 55555555.";
+            return View();
+        }
 
-            string ss = System.Configuration.ConfigurationManager.AppSettings.Get("csckeyx");
-            System.Diagnostics.Trace.TraceInformation("Contract is clicked. {0} at {1}", ss, DateTime.Now.ToString());
+        [HttpPost]
+        public ActionResult Contact(string strInput)
+        {
+            if (!string.IsNullOrEmpty(strInput))
+            {
+                var MefCalcClient = new ServiceReference1.ServiceCalcClient();
+
+                var strResult = MefCalcClient.MefCalculateIt(strInput);
+
+                ViewBag.Message = string.Format("{0} = {1}", strInput, strResult);
+            }
+
             return View();
         }
     }
